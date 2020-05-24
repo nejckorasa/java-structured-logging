@@ -7,12 +7,12 @@ import java.util.UUID;
 
 public class InsufficientBalanceEvent extends OpEvent {
     private final UUID accountId;
-    private final long adjustmentAmount;
+    private final long balance;
 
-    public InsufficientBalanceEvent(TraceInfo traceInfo, UUID accountId, long adjustmentAmount) {
+    public InsufficientBalanceEvent(TraceInfo traceInfo, UUID accountId, long balance) {
         super(traceInfo);
         this.accountId = accountId;
-        this.adjustmentAmount = adjustmentAmount;
+        this.balance = balance;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class InsufficientBalanceEvent extends OpEvent {
         return accountId;
     }
 
-    public long getAdjustmentAmount() {
-        return adjustmentAmount;
+    public long getBalance() {
+        return balance;
     }
 }

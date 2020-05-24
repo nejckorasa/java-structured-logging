@@ -23,12 +23,9 @@ public class StructuredLoggingTest {
     /*
      * {
      *   "@timestamp": "2020-05-24T16:05:13.913+01:00",
-     *   "@version": "1",
      *   "message": "Something happened",
      *   "logger_name": "logging-test",
-     *   "thread_name": "main",
      *   "level": "INFO",
-     *   "level_value": 20000,
      *   "traceId": "someTraceId",                                      <-- Trace info
      *   "spanId": "someSpanId"
      * }
@@ -41,12 +38,9 @@ public class StructuredLoggingTest {
     /*
      * {
      *   "@timestamp": "2020-05-24T16:09:12.227+01:00",
-     *   "@version": "1",
      *   "message": "Something happened",
      *   "logger_name": "logging-test",
-     *   "thread_name": "main",
      *   "level": "INFO",
-     *   "level_value": 20000,
      *   "traceInfo": [                                                 <-- Trace info
      *     {
      *       "traceId": "someTraceId",
@@ -63,16 +57,13 @@ public class StructuredLoggingTest {
     /*
      * {
      *   "@timestamp": "2020-05-24T16:09:43.136+01:00",
-     *   "@version": "1",
      *   "message": "Account has insufficient balance",
      *   "logger_name": "logging-test",
-     *   "thread_name": "main",
      *   "level": "ERROR",
-     *   "level_value": 20000,
      *   "event": {                                                     <-- Operational event with trace info
      *     "name": "InsufficientBalanceEvent",
      *     "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",
-     *     "adjustmentAmount": 1000,
+     *     "balance": 1000,
      *     "description": "Account has insufficient balance",
      *     "traceInfo": {
      *       "traceId": "someTraceId",
@@ -89,16 +80,13 @@ public class StructuredLoggingTest {
     /*
      * {
      *   "@timestamp": "2020-05-24T16:11:41.278+01:00",
-     *   "@version": "1",
      *   "message": "Account has insufficient balance",
      *   "logger_name": "operational-events",
-     *   "thread_name": "main",
      *   "level": "ERROR",
-     *   "level_value": 20000,
      *   "event": {                                                     <-- Operational event with trace info
      *     "event": "InsufficientBalanceEvent",
      *     "accountId": "e99cc00b-f4a5-40c4-b1cb-493a9f52071b",
-     *     "adjustmentAmount": 1000,
+     *     "balance": 1000,
      *     "description": "Account has insufficient balance",
      *     "traceInfo": {
      *       "traceId": "someTraceId",
