@@ -1,11 +1,14 @@
-package tech.nejckorasa.logging.opevent;
+package tech.nejckorasa.logging.events;
 
-import tech.nejckorasa.logging.OpEvent;
+import tech.nejckorasa.logging.LogEvent;
 import tech.nejckorasa.logging.TraceInfo;
 
 import java.util.UUID;
 
-public class InsufficientBalanceEvent extends OpEvent {
+/**
+ * Example of Log Event
+ */
+public class InsufficientBalanceEvent extends LogEvent {
     private final UUID accountId;
     private final long balance;
 

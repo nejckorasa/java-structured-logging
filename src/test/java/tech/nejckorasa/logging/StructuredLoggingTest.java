@@ -3,7 +3,7 @@ package tech.nejckorasa.logging;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.nejckorasa.logging.opevent.InsufficientBalanceEvent;
+import tech.nejckorasa.logging.events.InsufficientBalanceEvent;
 
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class StructuredLoggingTest {
     private static final TraceInfo traceInfo = TraceInfo.of("someTraceId", "someSpanId");
     private static final UUID accountId = randomUUID();
 
-    private final OpEvents opEvents = new OpEvents();
+    private final EventLogger eventLog = EventLogger.from(log);
 
     /*
      * {
@@ -60,7 +60,7 @@ public class StructuredLoggingTest {
      *   "message": "Account has insufficient balance",
      *   "logger_name": "logging-test",
      *   "level": "ERROR",
-     *   "event": {                                                     <-- Operational event with trace info
+     *   "event": {                                                     <-- Log Event with trace info
      *     "name": "InsufficientBalanceEvent",
      *     "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",
      *     "balance": 1000,
@@ -73,7 +73,7 @@ public class StructuredLoggingTest {
      * }
      */
     @Test
-    public void moreStructuredWithOperationalEvents() {
+    public void moreStructuredWithLogEvents() {
         log.error("Account has insufficient balance", new InsufficientBalanceEvent(traceInfo, accountId, 10_00).log());
     }
 
@@ -81,9 +81,9 @@ public class StructuredLoggingTest {
      * {
      *   "@timestamp": "2020-05-24T16:11:41.278+01:00",
      *   "message": "Account has insufficient balance",
-     *   "logger_name": "operational-events",
+     *   "logger_name": "logging-test",
      *   "level": "ERROR",
-     *   "event": {                                                     <-- Operational event with trace info
+     *   "event": {                                                     <-- Log Event with trace info
      *     "event": "InsufficientBalanceEvent",
      *     "accountId": "e99cc00b-f4a5-40c4-b1cb-493a9f52071b",
      *     "balance": 1000,
@@ -96,7 +96,7 @@ public class StructuredLoggingTest {
      * }
      */
     @Test
-    public void withOperationalEventsAndLoggerProxy() {
-        opEvents.error(new InsufficientBalanceEvent(traceInfo, accountId, 10_00));
+    public void withLogEventsAndEventLogger() {
+        eventLog.error(new InsufficientBalanceEvent(traceInfo, accountId, 10_00));
     }
 }

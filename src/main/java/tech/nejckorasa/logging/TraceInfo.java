@@ -4,6 +4,9 @@ package tech.nejckorasa.logging;
 import net.logstash.logback.argument.StructuredArgument;
 import net.logstash.logback.argument.StructuredArguments;
 
+/**
+ * Holds basic tracing data that's included in every Log Event, i.e. every implementation of {@link LogEvent} base class
+ */
 public class TraceInfo {
     private final String traceId;
     private final String spanId;

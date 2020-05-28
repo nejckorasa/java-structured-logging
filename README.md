@@ -4,15 +4,15 @@ Explore different simple options for Structured Logging in Java with Logback and
 
 See examples in [StructuredLoggingTest.java](/src/test/java/tech/nejckorasa/logging/StructuredLoggingTest.java).
 
-### Operational Events
+## Log Events
 
-The idea is to avoid using unstructured text data and adopt Consistent Structure in Logs. Easy way to achieve this is to always log **events**.
+The idea is to avoid using unstructured text data and adopt Consistent Structure in Logs. Easy way to achieve this is to always log **Events**.
 
-Define Operational Events as simple POJOs by extending base [OpEvent](/src/main/java/tech/nejckorasa/logging/OpEvent.java), for example:
+Define Log Events as simple POJOs by extending base [LogEvent](/src/main/java/tech/nejckorasa/logging/LogEvent.java), for example:
 
 ```java
-// define operational event
-class InsufficientBalanceEvent extends OpEvent {
+// Define Log Event
+class InsufficientBalanceEvent extends LogEvent {
     private UUID accountId;
     private long balance;
 
@@ -26,17 +26,18 @@ class InsufficientBalanceEvent extends OpEvent {
     public String getDescription() {
         return "Account has insufficient balance";
     }
+}
 
-// logging event
-opEvents.error(new InsufficientBalanceEvent(TraceInfo.of(traceId. spanId), accountId, 10_00);
+// Logging event
+eventLog.error(new InsufficientBalanceEvent(TraceInfo.of(traceId. spanId), accountId, 10_00));
 ```
-Logging above event will result in:
+InsufficientBalanceEvent is defined [here](/src/main/java/tech/nejckorasa/logging/events/InsufficientBalanceEvent.java). Logging above event will result in:
 
 ```json
 {
   "@timestamp": "2020-05-24T16:11:41.278+01:00",
   "message": "Account has insufficient balance",
-  "logger_name": "operational-events",
+  "logger_name": "logging-test",
   "level": "ERROR",
   "event": {
     "event": "InsufficientBalanceEvent",
@@ -50,9 +51,7 @@ Logging above event will result in:
   }
 }
 ```
-Similarly, every other operational event will have the same structure. 
-
-
+Similarly, every other log event will have the same structure. 
 
 
 

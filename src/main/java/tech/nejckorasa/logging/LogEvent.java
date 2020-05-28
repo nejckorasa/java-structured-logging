@@ -2,12 +2,16 @@ package tech.nejckorasa.logging;
 
 import net.logstash.logback.argument.StructuredArgument;
 import net.logstash.logback.argument.StructuredArguments;
+import tech.nejckorasa.logging.events.InsufficientBalanceEvent;
 
-public abstract class OpEvent {
+/**
+ * Base class for all Log Events, e.g. {@link InsufficientBalanceEvent}
+ */
+public abstract class LogEvent {
     private final String name = getClass().getSimpleName();
     private final TraceInfo traceInfo;
 
-    public OpEvent(TraceInfo traceInfo) {
+    public LogEvent(TraceInfo traceInfo) {
         this.traceInfo = traceInfo;
     }
 
