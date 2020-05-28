@@ -40,7 +40,7 @@ InsufficientBalanceEvent is defined [here](/src/main/java/tech/nejckorasa/loggin
   "logger_name": "logging-test",
   "level": "ERROR",
   "event": {
-    "event": "InsufficientBalanceEvent",
+    "name": "InsufficientBalanceEvent",
     "accountId": "e99cc00b-f4a5-40c4-b1cb-493a9f52071b",
     "balance": 1000,
     "description": "Account has insufficient balance",
