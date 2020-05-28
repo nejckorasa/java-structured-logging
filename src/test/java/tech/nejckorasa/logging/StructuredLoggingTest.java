@@ -84,7 +84,7 @@ public class StructuredLoggingTest {
      *   "logger_name": "logging-test",
      *   "level": "ERROR",
      *   "event": {                                                     <-- Log Event with trace info
-     *     "event": "InsufficientBalanceEvent",
+     *     "name": "InsufficientBalanceEvent",
      *     "accountId": "e99cc00b-f4a5-40c4-b1cb-493a9f52071b",
      *     "balance": 1000,
      *     "description": "Account has insufficient balance",

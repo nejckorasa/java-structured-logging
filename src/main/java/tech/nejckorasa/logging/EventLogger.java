@@ -26,18 +26,18 @@ public class EventLogger {
     }
 
     public void debug(LogEvent logEvent) {
-        log.debug(logEvent.getName(), logEvent.log());
+        log.debug(logEvent.getDescription(), logEvent.log());
     }
 
     public void info(LogEvent logEvent) {
-        log.info(logEvent.getName(), logEvent.log());
+        log.info(logEvent.getDescription(), logEvent.log());
     }
 
     public void warn(LogEvent logEvent) {
-        log.warn(logEvent.getName(), logEvent.log());
+        log.warn(logEvent.getDescription(), logEvent.log());
     }
 
     public void error(LogEvent logEvent) {
-        log.error(logEvent.getName(), logEvent.log());
+        log.error(logEvent.getDescription(), logEvent.log());
     }
 }
