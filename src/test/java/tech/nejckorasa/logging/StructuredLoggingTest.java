@@ -10,6 +10,9 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static net.logstash.logback.argument.StructuredArguments.f;
 
+/**
+ * Some examples of logging with {@link LogEvent}s
+ */
 @SuppressWarnings("PlaceholderCountMatchesArgumentCount")
 public class StructuredLoggingTest {
 
