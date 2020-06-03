@@ -1,7 +1,4 @@
-package tech.nejckorasa.logging.events;
-
-import tech.nejckorasa.logging.LogEvent;
-import tech.nejckorasa.logging.TraceInfo;
+package tech.nejckorasa.logging;
 
 import java.util.UUID;
 
@@ -12,8 +9,8 @@ public class InsufficientBalanceEvent extends LogEvent {
     private final UUID accountId;
     private final long balance;
 
-    public InsufficientBalanceEvent(TraceInfo traceInfo, UUID accountId, long balance) {
-        super(traceInfo);
+    public InsufficientBalanceEvent(UUID accountId, long balance) {
+        super();
         this.accountId = accountId;
         this.balance = balance;
     }
