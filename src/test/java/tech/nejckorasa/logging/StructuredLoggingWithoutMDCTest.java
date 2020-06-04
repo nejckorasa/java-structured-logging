@@ -27,37 +27,35 @@ public class StructuredLoggingWithoutMDCTest {
     /*
      * {
      *   "@timestamp": "2020-05-24T16:05:13.913+01:00",
-     *   "message": "Account b9b3e3da-9a3f-4454-ae25-dc9154263bf6 has insufficient balance of 1000",
+     *   "message": "Account b9b3e3da-9a3f-4454-ae25-dc9154263bf6 has insufficient balance",
      *   "logger_name": "logging-test",
      *   "level": "INFO"
      * }
      */
     @Test
     public void unstructuredHenceBad() {
-        log.info("Account {} has insufficient balance of {}", accountId, 10_00);
+        log.info("Account {} has insufficient balance", accountId);
     }
 
     /*
      * {
      *   "@timestamp": "2020-05-24T16:05:13.913+01:00",
      *   "message": "Account has insufficient balance",
-     *   "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",           <-- Structured fields for account and balance
-     *   "balance": 1000,
+     *   "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",           <-- Structured field for accountId
      *   "logger_name": "logging-test",
      *   "level": "INFO"
      * }
      */
     @Test
     public void withStructuredFields() {
-        log.info("Account has insufficient balance", kv("accountId", accountId), kv("balance", 10_00));
+        log.info("Account has insufficient balance", kv("accountId", accountId));
     }
 
     /*
      * {
      *   "@timestamp": "2020-05-24T16:09:12.227+01:00",
      *   "message": "Account has insufficient balance",
-     *   "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",           <-- Structured fields for account and balance
-     *   "balance": 1000,
+     *   "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",           <-- Structured field for accountId
      *   "logger_name": "logging-test",
      *   "level": "INFO",
      *   "traceInfo": [                                                 <-- Trace info
@@ -70,7 +68,7 @@ public class StructuredLoggingWithoutMDCTest {
      */
     @Test
     public void withStructuredFieldsAndTraceInfo() {
-        log.info("Account has insufficient balance", kv("accountId", accountId), kv("balance", 10_00), traceInfo.log());
+        log.info("Account has insufficient balance", kv("accountId", accountId), traceInfo.log());
     }
 
     /*
@@ -81,9 +79,8 @@ public class StructuredLoggingWithoutMDCTest {
      *   "level": "ERROR",
      *   "event": {                                                     <-- Log Event with trace info
      *     "name": "InsufficientBalanceEvent",
-     *     "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",
-     *     "balance": 1000,
      *     "description": "Account has insufficient balance",
+     *     "accountId": "b9b3e3da-9a3f-4454-ae25-dc9154263bf6",
      *     "traceInfo": {
      *       "traceId": "someTraceId",
      *       "spanId": "someSpanId"
@@ -93,7 +90,7 @@ public class StructuredLoggingWithoutMDCTest {
      */
     @Test
     public void withLogEvents() {
-        log.error("Account has insufficient balance", new InsufficientBalanceEvent(traceInfo, accountId, 10_00).log());
+        log.error("Account has insufficient balance", new InsufficientBalanceEvent(traceInfo, accountId).log());
     }
 
     /*
@@ -104,9 +101,8 @@ public class StructuredLoggingWithoutMDCTest {
      *   "level": "ERROR",
      *   "event": {                                                     <-- Log Event with trace info
      *     "name": "InsufficientBalanceEvent",
-     *     "accountId": "e99cc00b-f4a5-40c4-b1cb-493a9f52071b",
-     *     "balance": 1000,
      *     "description": "Account has insufficient balance",
+     *     "accountId": "e99cc00b-f4a5-40c4-b1cb-493a9f52071b",
      *     "traceInfo": {
      *       "traceId": "someTraceId",
      *       "spanId": "someSpanId"
@@ -116,9 +112,30 @@ public class StructuredLoggingWithoutMDCTest {
      */
     @Test
     public void withLogEventsAndEventLogger() {
-        eventLog.error(new InsufficientBalanceEvent(traceInfo, accountId, 10_00));
+        eventLog.error(new InsufficientBalanceEvent(traceInfo, accountId));
     }
 
+
+    /**
+     * Example of Log Event
+     */
+    private static class InsufficientBalanceEvent extends LogEvent {
+        private final UUID accountId;
+
+        public InsufficientBalanceEvent(TraceInfo traceInfo, UUID accountId) {
+            super(traceInfo);
+            this.accountId = accountId;
+        }
+
+        @Override
+        public String getDescription() {
+            return "Account has insufficient balance";
+        }
+
+        public UUID getAccountId() {
+            return accountId;
+        }
+    }
 
     /**
      * Base class for all Log Events, e.g. {@link tech.nejckorasa.logging.InsufficientBalanceEvent}
@@ -172,33 +189,6 @@ public class StructuredLoggingWithoutMDCTest {
 
         public StructuredArgument log() {
             return StructuredArguments.a("traceInfo", this);
-        }
-    }
-
-    /**
-     * Example of Log Event
-     */
-    private static class InsufficientBalanceEvent extends LogEvent {
-        private final UUID accountId;
-        private final long balance;
-
-        public InsufficientBalanceEvent(TraceInfo traceInfo, UUID accountId, long balance) {
-            super(traceInfo);
-            this.accountId = accountId;
-            this.balance = balance;
-        }
-
-        @Override
-        public String getDescription() {
-            return "Account has insufficient balance";
-        }
-
-        public UUID getAccountId() {
-            return accountId;
-        }
-
-        public long getBalance() {
-            return balance;
         }
     }
 

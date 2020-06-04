@@ -6,13 +6,12 @@ import java.util.UUID;
  * Example of Log Event
  */
 public class InsufficientBalanceEvent extends LogEvent {
+    // All relevant fields for this event
     private final UUID accountId;
-    private final long balance;
 
-    public InsufficientBalanceEvent(UUID accountId, long balance) {
+    public InsufficientBalanceEvent(UUID accountId) {
         super();
         this.accountId = accountId;
-        this.balance = balance;
     }
 
     @Override
@@ -22,9 +21,5 @@ public class InsufficientBalanceEvent extends LogEvent {
 
     public UUID getAccountId() {
         return accountId;
-    }
-
-    public long getBalance() {
-        return balance;
     }
 }
