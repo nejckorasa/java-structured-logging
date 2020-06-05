@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nejckorasa/java-structured-logging.svg?branch=master)](https://travis-ci.org/nejckorasa/java-structured-logging)
+
 # java-structured-logging
 
 Explore different options for Structured Logging in Java with structured fields and log events, using Logback and logstash-logback-encoder.
